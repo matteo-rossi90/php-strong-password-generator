@@ -1,0 +1,23 @@
+/* regole e proprietà */
+
+body{
+    background-color: dodgerblue;
+}
+
+.text-color{
+    color: white;
+}
+
+.block{
+    background-color: azure;
+    border-radius: 5px;
+}
+
+.password-choice{
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+}
+
+.input-width {
+    width: 40%;
+}
