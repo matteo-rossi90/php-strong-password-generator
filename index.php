@@ -1,5 +1,8 @@
 <?php
 
+//iniziare la sessione
+session_start();
+
 //includere il file "functions.php" nell'index. Il file racchiude la funzione per generare la password
 include __DIR__ . '/functions.php';
 
@@ -8,6 +11,11 @@ if (isset($_GET['number'])) {
     $pw_length = $_GET['number'];
     if ($pw_length >= 8 && $pw_length <= 32) {
         $password = generatePassword($pw_length);
+
+        $_SESSION['password'] = $password;//salvare la password nella variabile di sessione
+
+        header('Location: success.php'); //reindirizzare l'utente alla pagina success.php se la password è stata generata correttamente
+        
     } else {
         $error = "Errore! La lunghezza della password deve essere compresa tra 8 e 32 caratteri.";
     }
@@ -33,24 +41,13 @@ if (isset($_GET['number'])) {
             <h1 class="text-center text-color">Strong generator password</h1>
             <h2 class="text-center text-color my-4" >Genera una password sicura</h2>
 
-            <!-- si mostra la password solo se è stata generata correttamente in base alla lunghezza stabilita dall'utente -->
-            <?php if(isset($password) && !empty($password)): ?>
-
-                <div class="p-4 alert alert-success mt-3 text-center">
-                    <strong>
-                        <?php echo $password ?>
-                    </strong>
-                </div>
-
-                <?php elseif(isset($error) && !empty($error)): ?>
-
-                <div class="p-4 alert alert-danger mt-3"> <?php echo $error ?></div>
-
+            <?php if(isset($error)): ?>
+                <div class="alert alert-danger mt-3"><?php echo $error; ?></div>
             <?php endif; ?>
-
-            <div class="password-choice p-4 my-3">
                 
-            <!-- form per consentire all'utente di scegliere una lunghezza adeguata per la propria password -->
+            <div class="password-choice p-3 my-3">
+            
+                <!-- form per consentire all'utente di scegliere una lunghezza adeguata per la propria password -->
                 <form action="index.php" method="GET">
                     <div class="mb-3 d-flex justify-content-between">
 
