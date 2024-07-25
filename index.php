@@ -1,25 +1,7 @@
 <?php
 
-//creare una funzione per generare una password random
-function generatePassword($length) {
-    //definire i set di caratteri da usare
-    $letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $numbers = '0123456789';
-    $specialChars = '!?&%$<>^+-*/()[]{}@#_=?';
-    
-    //combinare tutti i set di caratteri
-    $allChars = $letters . $numbers . $specialChars;
-    
-    //inizializzare la password vuota
-    $password = '';
-    
-    //generare una password con la lunghezza specificata
-    for ($i = 0; $i < $length; $i++) {
-        $password .= $allChars[random_int(0, strlen($allChars) - 1)];
-    }
-    
-    return $password;
-}
+//includere il file "functions.php" nell'index. Il file racchiude la funzione per generare la password
+include __DIR__ . '/functions.php';
 
 // eseguire la creazione della password solo se viene specificata la lunghezza
 if (isset($_GET['number'])) {
@@ -51,37 +33,42 @@ if (isset($_GET['number'])) {
             <h1 class="text-center text-color">Strong generator password</h1>
             <h2 class="text-center text-color my-4" >Genera una password sicura</h2>
 
+            <!-- si mostra la password solo se è stata generata correttamente in base alla lunghezza stabilita dall'utente -->
             <?php if(isset($password) && !empty($password)): ?>
 
-                <div class="block p-4 alert alert-success mt-3"> Password generata:  <?php echo $password ?></div>
+                <div class="p-4 alert alert-success mt-3 text-center">
+                    <strong>
+                        <?php echo $password ?>
+                    </strong>
+                </div>
 
                 <?php elseif(isset($error) && !empty($error)): ?>
-                <div class="block p-4 alert alert-danger mt-3"> <?php echo $error ?></div>
+
+                <div class="p-4 alert alert-danger mt-3"> <?php echo $error ?></div>
 
             <?php endif; ?>
 
             <div class="password-choice p-4 my-3">
                 
+            <!-- form per consentire all'utente di scegliere una lunghezza adeguata per la propria password -->
                 <form action="index.php" method="GET">
                     <div class="mb-3 d-flex justify-content-between">
+
                         <label class="form-label">Scegli la lunghezza della tua password:</label>
                         <input type="number" class="form-control input-width" name="number" id="number" min="8" max="32">
-
-                        
                         
                     </div>
+
+                    <!-- pulsante che genera la password secondo i criteri richiesti -->
                     <button type="submit" class="btn btn-primary">Genera</button>
-                    <a href="index.php" class="btn btn-warning">Annulla</a>
+
+                    <!-- pulsante che azzera gli input rimandando l'utente alla pagina iniziale -->
+                    <a href="index.php" class="btn btn-secondary">Annulla</a>
                 </form>
 
 
             </div>
         </div>
-        
-        
-
-
-
 
     </div>
     
